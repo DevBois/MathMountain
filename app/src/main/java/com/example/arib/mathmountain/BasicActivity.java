@@ -18,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Arib on 7/21/2016.
+ * Although this class is an activity. It is abstract and is never started. It only holds the basic
+ * functions and methods such as creating questions and generating answers for them.
  */
 public abstract class BasicActivity extends Activity {
 
@@ -29,6 +31,8 @@ public abstract class BasicActivity extends Activity {
     Drawable barImage;
     Drawable image;
     MediaPlayer song;
+    MediaPlayer right;
+    MediaPlayer wrong;
     Thread th;
     Thread goodThread;
     Thread flashThread;
@@ -50,7 +54,19 @@ public abstract class BasicActivity extends Activity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    goodImage.setVisibility(View.VISIBLE);
                     goodImage.setImageDrawable(image);
+                }
+            });
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    goodImage.setVisibility(View.GONE);
                 }
             });
         }
@@ -304,7 +320,6 @@ public abstract class BasicActivity extends Activity {
         TextView questionBox2 = (TextView) findViewById(R.id.questionText2);
         TextView questionBox3 = (TextView) findViewById(R.id.questionText3);
         TextView questionBox = (TextView) findViewById(R.id.questionText);
-        resetColors();
         if(questionBox3.getText().equals("")) {
             questionBox3.setText(question);
         } else if(questionBox2.getText().equals("")) {
@@ -375,6 +390,72 @@ public abstract class BasicActivity extends Activity {
     protected void displayGood() {
         goodThread = new Thread(imageUpdate);
         goodThread.start();
+    }
+
+    protected void buttonFlash() {
+        final Button first = (Button) findViewById(R.id.first_choice);
+        final Button second = (Button) findViewById(R.id.second_choice);
+        final Button third = (Button) findViewById(R.id.third_choice);
+        final Button fourth = (Button) findViewById(R.id.fourth_choice);
+        flashThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        first.setBackgroundColor(Color.GREEN);
+                        second.setBackgroundColor(Color.GREEN);
+                        third.setBackgroundColor(Color.GREEN);
+                        fourth.setBackgroundColor(Color.GREEN);
+                    }
+                });
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        first.setBackgroundColor(Color.parseColor("#7d535cca"));
+                        second.setBackgroundColor(Color.parseColor("#7d535cca"));
+                        third.setBackgroundColor(Color.parseColor("#7d535cca"));
+                        fourth.setBackgroundColor(Color.parseColor("#7d535cca"));
+                    }
+                });
+
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        first.setBackgroundColor(Color.GREEN);
+                        second.setBackgroundColor(Color.GREEN);
+                        third.setBackgroundColor(Color.GREEN);
+                        fourth.setBackgroundColor(Color.GREEN);
+                    }
+                });
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        first.setBackgroundColor(Color.parseColor("#7d535cca"));
+                        second.setBackgroundColor(Color.parseColor("#7d535cca"));
+                        third.setBackgroundColor(Color.parseColor("#7d535cca"));
+                        fourth.setBackgroundColor(Color.parseColor("#7d535cca"));
+                    }
+                });
+
+            }
+        });
+        flashThread.start();
     }
 
     abstract public void firstSelected(View view);

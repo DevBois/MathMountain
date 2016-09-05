@@ -52,6 +52,10 @@ public class ContinuousActivity extends BasicActivity {
 
             }
         });
+        right = MediaPlayer.create(this, R.raw.right);
+        right.setLooping(false);
+        wrong = MediaPlayer.create(this, R.raw.wrong);
+        wrong.setLooping(false);
         song = MediaPlayer.create(this, R.raw.song);
         song.setLooping(true);
         if(!GameSelectionActivity.MUTED)
@@ -86,6 +90,9 @@ public class ContinuousActivity extends BasicActivity {
         handler.addHighScore(level + "");
         setClickableButtons(false);
         times = (ArrayList) handler.getAllTeams();
+        Button bigButton = (Button) findViewById(R.id.bigStart);
+        bigButton.setText("RESTART");
+        bigButton.setVisibility(View.VISIBLE);
         Button startButton = (Button) findViewById(R.id.start);
         startButton.setText("Restart");
         startButton.setVisibility(View.VISIBLE);
@@ -123,13 +130,14 @@ public class ContinuousActivity extends BasicActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            button.setBackgroundColor(Color.TRANSPARENT);
+                             button.setBackgroundColor(Color.parseColor("#b5535cca"));
                         }
                     });
                 }
             });
             flashThread.start();
             displayGood();
+            right.start();
         } else {
             endGame();
         }
@@ -167,13 +175,14 @@ public class ContinuousActivity extends BasicActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            button.setBackgroundColor(Color.TRANSPARENT);
+                             button.setBackgroundColor(Color.parseColor("#b5535cca"));
                         }
                     });
                 }
             });
             flashThread.start();
             displayGood();
+            right.start();
         } else {
             endGame();
         }
@@ -211,13 +220,14 @@ public class ContinuousActivity extends BasicActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            button.setBackgroundColor(Color.TRANSPARENT);
+                             button.setBackgroundColor(Color.parseColor("#b5535cca"));
                         }
                     });
                 }
             });
             flashThread.start();
             displayGood();
+            right.start();
         } else {
             endGame();
         }
@@ -256,13 +266,14 @@ public class ContinuousActivity extends BasicActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            button.setBackgroundColor(Color.TRANSPARENT);
+                             button.setBackgroundColor(Color.parseColor("#b5535cca"));
                         }
                     });
                 }
             });
             flashThread.start();
             displayGood();
+            right.start();
         } else {
             endGame();
         }
